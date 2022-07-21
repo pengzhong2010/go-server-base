@@ -1,0 +1,161 @@
+// 定义项目 API 的 proto 文件 可以同时描述 gRPC 和 HTTP API
+// protobuf 文件参考:
+//  - https://developers.google.com/protocol-buffers/
+syntax = "proto3";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "app/app1/api/v1/common.proto";
+
+// package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
+package app.app1.v1;
+
+// NOTE: 最后请删除这些无用的注释 (゜-゜)つロ
+
+option go_package = "github.com/pengzhong2010/go-server-base/app/app1/api/v1;v1";
+option (gogoproto.goproto_getters_all) = false;
+
+service RobotAPI {
+  // 机器人管理-创建
+  rpc CreateRobot(RobotCReq) returns (UpdateResp) {
+    option (google.api.http) = {
+      post: "/problem-ex/robot/create"
+    };
+  };
+  // 机器人管理-更新
+  rpc UpdateRobot(RobotUReq) returns (UpdateResp) {
+    option (google.api.http) = {
+      put: "/problem-ex/robot/update"
+    };
+  };
+  // 机器人管理-删除
+  rpc DeleteRobot(IDReq) returns (UpdateResp) {
+    option (google.api.http) = {
+      delete: "/problem-ex/robot/delete"
+    };
+  };
+  // 机器人管理-详情
+  rpc GetRobot(IDReq) returns (Robot) {
+    option (google.api.http) = {
+      get: "/problem-ex/robot/get"
+    };
+  };
+  // 机器人管理-列表
+  rpc ListRobot(ListRobotReq) returns (ListRobotResp) {
+    option (google.api.http) = {
+      get: "/problem-ex/robot/list"
+    };
+  };
+}
+
+message Robot {
+  // id
+  int64  id     = 1 [(gogoproto.jsontag) = 'id'];
+  // 昵称
+  string nickname   = 2 [(gogoproto.jsontag) = 'nickname'];
+  // 创建人
+  string creator_uid   = 3 [(gogoproto.jsontag) = 'creator_uid'];
+  // 机器人地址
+  string webhook   = 4 [(gogoproto.jsontag) = 'webhook'];
+  // 标签
+  string tag   = 5 [(gogoproto.jsontag) = 'tag'];
+  // 组件
+  repeated int64 componentIds  = 6 [(gogoproto.jsontag) = 'component_ids'];
+}
+
+message RobotWithNickname {
+  // id
+  int64  id = 1 [(gogoproto.jsontag) = 'id'];
+  // 昵称
+  string nickname = 2 [(gogoproto.jsontag) = 'nickname'];
+  // 类别
+  string type   = 3 [(gogoproto.jsontag) = 'type'];
+}
+
+
+message RobotCReq {
+  // 昵称
+  string nickname   = 2 [(gogoproto.jsontag) = 'nickname', (gogoproto.moretags) = 'validate:"required"'];
+  // 机器人地址
+  string webhook   = 4 [(gogoproto.jsontag) = 'webhook', (gogoproto.moretags) = 'validate:"required"'];
+  // 标签
+  string tag   = 5 [(gogoproto.jsontag) = 'tag', (gogoproto.moretags) = 'validate:"required"'];
+  // 组件
+  repeated int64 componentIds  = 6 [(gogoproto.jsontag) = 'component_ids', (gogoproto.moretags) = 'validate:"required"'];
+}
+
+message RobotUReq {
+  // id
+  int64  id     = 1 [(gogoproto.jsontag) = 'id', (gogoproto.moretags) = 'validate:"required"'];
+  // 昵称
+  string nickname   = 2 [(gogoproto.jsontag) = 'nickname'];
+  // 机器人地址
+  string webhook   = 4 [(gogoproto.jsontag) = 'webhook'];
+  // 标签
+  string tag   = 5 [(gogoproto.jsontag) = 'tag'];
+  // 组件
+  repeated int64 componentIds  = 6 [(gogoproto.jsontag) = 'component_ids'];
+}
+
+message ListRobotReq {
+  // id
+  int64 id            = 1    [(gogoproto.jsontag) = 'id', (gogoproto.moretags) = 'form:"id"'];
+  // 模糊搜索
+  string key          = 2    [(gogoproto.jsontag) = 's', (gogoproto.moretags) = 'form:"s"'];
+  // team_id
+  int64 team_id            = 10    [(gogoproto.jsontag) = 'team_id', (gogoproto.moretags) = 'form:"team_id"'];
+  // component_id
+  int64 component_id            = 11    [(gogoproto.jsontag) = 'component_id', (gogoproto.moretags) = 'form:"component_id"'];
+  // 分页
+  int64  pageSize     = 3    [(gogoproto.jsontag) = 'page_size', (gogoproto.moretags) = 'form:"page_size"'];
+  // 分页
+  int64  pageNum      = 4    [(gogoproto.jsontag) = 'page_num', (gogoproto.moretags) = 'form:"page_num"'];
+  // 开始时间
+  int64  stime        = 5    [(gogoproto.jsontag) = 'start_date', (gogoproto.moretags) = 'form:"start_date"'];
+  // 结束时间
+  int64  etime        = 6    [(gogoproto.jsontag) = 'end_date', (gogoproto.moretags) = 'form:"end_date"'];
+  // 排序字段
+  string orderby      = 7    [(gogoproto.jsontag) = 'orderby', (gogoproto.moretags) = 'form:"orderby"'];
+  // 排序字段
+  string asc      = 8    [(gogoproto.jsontag) = 'asc', (gogoproto.moretags) = 'form:"asc"'];
+  // 我的
+  int64 mine  = 9    [(gogoproto.jsontag) = 'mine', (gogoproto.moretags) = 'form:"mine"'];
+}
+
+message ListRobotResp {
+  repeated RobotForList data  = 1 [(gogoproto.jsontag) = 'list'];
+  int64          count = 2 [(gogoproto.jsontag) = 'count'];
+}
+
+message RobotForList {
+  // id
+  int64  id     = 1 [(gogoproto.jsontag) = 'id'];
+  // 昵称
+  string nickname   = 2 [(gogoproto.jsontag) = 'nickname'];
+  // 创建人
+  string creator_uid   = 3 [(gogoproto.jsontag) = 'creator_uid'];
+  // 机器人地址
+  string webhook   = 4 [(gogoproto.jsontag) = 'webhook'];
+  // 标签
+  string tag   = 5 [(gogoproto.jsontag) = 'tag'];
+  // 创建时间
+  int64  cTime   = 6  [(gogoproto.jsontag) = 'create_time', (gogoproto.moretags) = 'gorm:"-"'];
+  // 更新时间
+  int64  mTime   = 7  [(gogoproto.jsontag) = 'update_time', (gogoproto.moretags) = 'gorm:"-"'];
+  // 删除标志位
+  int64   isDeleted    = 8   [(gogoproto.jsontag) = 'is_deleted'];
+  // 团队信息
+  repeated RobotWithTeamAndComponentIdName team_component  = 9 [(gogoproto.jsontag) = 'team_component'];
+}
+message RobotWithTeamAndComponentIdName {
+  // team_id
+  int64  team_id     = 1 [(gogoproto.jsontag) = 'team_id'];
+  // 团队名称
+  string team_name   = 2 [(gogoproto.jsontag) = 'team_name'];
+  // component_id
+  int64  component_id     = 3 [(gogoproto.jsontag) = 'component_id'];
+  // 组件名称
+  string component_name   = 4 [(gogoproto.jsontag) = 'component_name'];
+
+}

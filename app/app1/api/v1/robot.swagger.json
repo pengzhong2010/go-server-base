@@ -1,0 +1,479 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/app1/api/v1/robot.proto",
+    "description": "package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "RobotAPI"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/problem-ex/robot/create": {
+      "post": {
+        "summary": "机器人管理-创建",
+        "operationId": "RobotAPI_CreateRobot",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "nickname",
+            "description": "昵称",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "webhook",
+            "description": "机器人地址",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tag",
+            "description": "标签",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "componentIds",
+            "description": "组件",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "RobotAPI"
+        ]
+      }
+    },
+    "/problem-ex/robot/delete": {
+      "delete": {
+        "summary": "机器人管理-删除",
+        "operationId": "RobotAPI_DeleteRobot",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "RobotAPI"
+        ]
+      }
+    },
+    "/problem-ex/robot/get": {
+      "get": {
+        "summary": "机器人管理-详情",
+        "operationId": "RobotAPI_GetRobot",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Robot"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "RobotAPI"
+        ]
+      }
+    },
+    "/problem-ex/robot/list": {
+      "get": {
+        "summary": "机器人管理-列表",
+        "operationId": "RobotAPI_ListRobot",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListRobotResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "key",
+            "description": "模糊搜索",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "teamId",
+            "description": "team_id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "componentId",
+            "description": "component_id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pageSize",
+            "description": "分页",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pageNum",
+            "description": "分页",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "stime",
+            "description": "开始时间",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "etime",
+            "description": "结束时间",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orderby",
+            "description": "排序字段",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "asc",
+            "description": "排序字段",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mine",
+            "description": "我的",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "RobotAPI"
+        ]
+      }
+    },
+    "/problem-ex/robot/update": {
+      "put": {
+        "summary": "机器人管理-更新",
+        "operationId": "RobotAPI_UpdateRobot",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "nickname",
+            "description": "昵称",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "webhook",
+            "description": "机器人地址",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tag",
+            "description": "标签",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "componentIds",
+            "description": "组件",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "RobotAPI"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1ListRobotResp": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RobotForList"
+          }
+        },
+        "count": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1Robot": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "nickname": {
+          "type": "string",
+          "title": "昵称"
+        },
+        "creatorUid": {
+          "type": "string",
+          "title": "创建人"
+        },
+        "webhook": {
+          "type": "string",
+          "title": "机器人地址"
+        },
+        "tag": {
+          "type": "string",
+          "title": "标签"
+        },
+        "componentIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          },
+          "title": "组件"
+        }
+      }
+    },
+    "v1RobotForList": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "nickname": {
+          "type": "string",
+          "title": "昵称"
+        },
+        "creatorUid": {
+          "type": "string",
+          "title": "创建人"
+        },
+        "webhook": {
+          "type": "string",
+          "title": "机器人地址"
+        },
+        "tag": {
+          "type": "string",
+          "title": "标签"
+        },
+        "cTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建时间"
+        },
+        "mTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新时间"
+        },
+        "isDeleted": {
+          "type": "string",
+          "format": "int64",
+          "title": "删除标志位"
+        },
+        "teamComponent": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RobotWithTeamAndComponentIdName"
+          },
+          "title": "团队信息"
+        }
+      }
+    },
+    "v1RobotWithTeamAndComponentIdName": {
+      "type": "object",
+      "properties": {
+        "teamId": {
+          "type": "string",
+          "format": "int64",
+          "title": "team_id"
+        },
+        "teamName": {
+          "type": "string",
+          "title": "团队名称"
+        },
+        "componentId": {
+          "type": "string",
+          "format": "int64",
+          "title": "component_id"
+        },
+        "componentName": {
+          "type": "string",
+          "title": "组件名称"
+        }
+      }
+    },
+    "v1UpdateResp": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "title": "返回信息"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,121 @@
+// 定义项目 API 的 proto 文件 可以同时描述 gRPC 和 HTTP API
+// protobuf 文件参考:
+//  - https://developers.google.com/protocol-buffers/
+syntax = "proto3";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+
+// package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
+package app.app1.v1;
+
+// NOTE: 最后请删除这些无用的注释 (゜-゜)つロ
+
+option go_package = "github.com/pengzhong2010/go-server-base/app/app1/api/v1;v1";
+
+message IDReq {
+  // id
+  int64 id = 1 [(gogoproto.jsontag) = 'id', (gogoproto.moretags) = 'form:"id" validate:"required"'];
+}
+
+message IDReqs {
+  // id
+  repeated int64 ids = 1 [(gogoproto.jsontag) = 'ids', (gogoproto.moretags) = 'form:"ids" validate:"required"'];
+}
+
+message BaseReq {
+  // 模糊搜索
+  string key      = 1    [(gogoproto.jsontag) = 'key', (gogoproto.moretags) = 'form:"key"'];
+  // 分页
+  int32  pageSize = 2    [(gogoproto.jsontag) = 'page_size', (gogoproto.moretags) = 'form:"page_size"'];
+  // 分页
+  int32  pageNum  = 3    [(gogoproto.jsontag) = 'page_num', (gogoproto.moretags) = 'form:"page_num"'];
+  // id
+  int64  id       = 4    [(gogoproto.jsontag) = 'id', (gogoproto.moretags) = 'form:"id"'];
+}
+
+message KeyReq {
+  string key = 1 [(gogoproto.moretags) = 'form:"key"'];
+}
+
+message UpdateResp {
+  // 返回信息
+  string message = 1 [(gogoproto.jsontag) = 'message'];
+}
+
+message IDResp {
+  int64 id = 1 [(gogoproto.jsontag) = 'id'];
+}
+
+message MapResp {
+  map<string, string> data = 1 [(gogoproto.jsontag) = 'map'];
+}
+
+message ListReq {
+  // id
+  int64 id            = 1    [(gogoproto.jsontag) = 'id', (gogoproto.moretags) = 'form:"id"'];
+  // 模糊搜索
+  string key          = 2    [(gogoproto.jsontag) = 's', (gogoproto.moretags) = 'form:"s"'];
+  // 分页
+  int64  pageSize     = 3    [(gogoproto.jsontag) = 'page_size', (gogoproto.moretags) = 'form:"page_size"'];
+  // 分页
+  int64  pageNum      = 4    [(gogoproto.jsontag) = 'page_num', (gogoproto.moretags) = 'form:"page_num"'];
+  // 开始时间
+  int64  stime        = 5    [(gogoproto.jsontag) = 'start_date', (gogoproto.moretags) = 'form:"start_date"'];
+  // 结束时间
+  int64  etime        = 6    [(gogoproto.jsontag) = 'end_date', (gogoproto.moretags) = 'form:"end_date"'];
+  // 排序字段
+  string orderby      = 7    [(gogoproto.jsontag) = 'orderby', (gogoproto.moretags) = 'form:"orderby"'];
+  // 排序字段
+  string asc      = 8    [(gogoproto.jsontag) = 'asc', (gogoproto.moretags) = 'form:"asc"'];
+  // 我的
+  int64 mine  = 9    [(gogoproto.jsontag) = 'mine', (gogoproto.moretags) = 'form:"mine"'];
+}
+
+enum Mine {
+  MINE_DEFAULT = 0;
+  MINE_MINE = 1;
+}
+
+enum IncidentTargetType {
+  INCIDENT_TARGET_TYPE_DEFAULT = 0;
+  INCIDENT_TARGET_TYPE_MALFUNCTION = 1;
+  INCIDENT_TARGET_TYPE_INCIDENT = 2;
+}
+enum AttentionAction {
+  ATTENTION_ACTION_DEFAULT = 0;
+  ATTENTION_ACTION_DO = 1;
+  ATTENTION_ACTION_DONOT =2;
+}
+message FrontendUser {
+  int64 id = 1 [(gogoproto.jsontag) = 'id'];
+  string nickname = 2 [(gogoproto.jsontag) = 'nickname'];
+  string ad_account = 3 [(gogoproto.jsontag) = 'ad_account'];
+  string avatar_url = 4 [(gogoproto.jsontag) = 'avatar_url'];
+  string wx_account = 5 [(gogoproto.jsontag) = 'wx_account'];
+}
+message FrontendDepartment {
+  int64 id = 1 [(gogoproto.jsontag) = 'id'];
+  string name = 2 [(gogoproto.jsontag) = 'name'];
+}
+message FrontendComponent {
+  int64 id = 1 [(gogoproto.jsontag) = 'id'];
+  string name = 2 [(gogoproto.jsontag) = 'name'];
+}
+message FrontendMalfunction {
+  int64 id = 1 [(gogoproto.jsontag) = 'id'];
+  string name = 2 [(gogoproto.jsontag) = 'name'];
+}
+message FrontendBusiness {
+  int64 id = 1 [(gogoproto.jsontag) = 'id'];
+  string name = 2 [(gogoproto.jsontag) = 'name'];
+}
+message FrontendFoundChannel {
+  int64 id = 1 [(gogoproto.jsontag) = 'id'];
+  string name = 2 [(gogoproto.jsontag) = 'name'];
+}
+message FrontendReplay {
+  int64 id = 1 [(gogoproto.jsontag) = 'id'];
+  string name = 2 [(gogoproto.jsontag) = 'name'];
+}
